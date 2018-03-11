@@ -1,5 +1,6 @@
 package example
 
+import example.db.KMongo
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpHeaders
 import io.vertx.core.http.HttpServer
@@ -23,17 +24,25 @@ class App : CoroutineVerticle() {
 
   private lateinit var engine: HandlebarsTemplateEngine
 
+  private lateinit var kMongo: KMongo
+
 
   override suspend fun start() {
-
+    // create required instances
+    kMongo = KMongo(vertx)
     engine = HandlebarsTemplateEngine.create()
 
+    // ensure mongoDB indexes
+    kMongo.ensureIndexes()
+
+    // init routers
     val router = Router.router(vertx)
     router.get("/").coroutineHandler { ctx -> home(ctx) }
 
+    // nit static file serving
     router.route("/static/*").handler(StaticHandler.create())
 
-    // Start the server
+    // start the server
     awaitResult<HttpServer> {
       vertx.createHttpServer()
           .requestHandler(router::accept)
