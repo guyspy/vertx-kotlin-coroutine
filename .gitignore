@@ -1,0 +1,14 @@
+logs
+target
+cache
+/.idea
+/.vertx
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/.iml
+*.iml
+/RUNNING_PID
+.*
+!.gitignore
