@@ -7,9 +7,16 @@ Coroutines enables to write asynchronous code with sequential statements
 
 Run the main function from the IDE
 
+## Running from the CLI
+
+```
+> mvn compile vertx:run
+```
+This will support hot-reload
+
 ## Running as a fat jar
 
 ```
-> mvn package
+> mvn clean package
 > java -jar target/kotlin-coroutines-examples.jar
 ```
